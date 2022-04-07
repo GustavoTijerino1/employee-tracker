@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/GustavoTijerino1/employee-tracker#readme",
   "dependencies": {
-    "express": "^4.17.3",
     "inquirer": "^8.2.2",
     "mysql2": "^2.3.3"
   },
