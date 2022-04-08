@@ -1,8 +1,8 @@
 
 const inquirer = require('inquirer')
 const mysql = require('mysql2');
-// const Connection = require('mysql2/typings/mysql/lib/Connection');
 
+// connects to my db
 const db = mysql.createConnection(
   {
     host: 'localhost',
@@ -20,6 +20,7 @@ db.connect ((err) => {
   potato()
 })
 
+// function that prompts all the options
 const potato = () => {
   inquirer.prompt({
 
@@ -41,8 +42,8 @@ const potato = () => {
         case 'View all Employees':
           viewEmp()
         break
-        case 'Add a Department':
-          addDep()
+        case 'Add a Department':            //This switch function activates a specific function
+          addDep()                          //depending on what the user chose.
         break
         case 'Add a Role':
           addRole()
@@ -61,7 +62,7 @@ const potato = () => {
     })
 };
 
-
+// Lets user see all dept
 const viewDep = () =>{
   db.query('SELECT * FROM department', (err, results) => {
     console.table(results);
@@ -74,6 +75,7 @@ const viewDep = () =>{
   
 
 }
+// Lets user see all Roles
 const viewRole = () =>{
   db.query('SELECT * FROM role', (err, results) => {
     console.table(results);
@@ -85,6 +87,8 @@ const viewRole = () =>{
 
   })
 }
+
+// Lets user see all employees
 const viewEmp = () =>{
   db.query('SELECT e.id, concat_ws(" ", e.first_name, e.last_name) as Employee, role.title as Title, concat_ws(" ", m.first_name, m.last_name) as Manager FROM employee e INNER JOIN role ON e.role_id = role.id LEFT JOIN employee m ON  m.id = e.manager_id;', (err, results) => {
     console.table(results);
@@ -96,6 +100,7 @@ const viewEmp = () =>{
 
   })
 }
+//Lets user add  dept
 const addDep = async () =>{
   const newDep = await inquirer.prompt ([
     {
@@ -113,6 +118,7 @@ const addDep = async () =>{
       }
     }
   ])
+  // puts user answers into the db
   .then(answer => {
     const newD = `INSERT INTO department (name)
                 VALUES (?)`;
@@ -125,6 +131,7 @@ const addDep = async () =>{
 });
 };
 
+//Lets user add  role
 const addRole = async () =>{
   const newRole = await inquirer.prompt ([
     {
@@ -162,6 +169,7 @@ const addRole = async () =>{
       choices: ['1', '2', '3']
     }
   ])
+    // puts user answers into the db
   .then(answer => {
     const choices = [answer.role, answer.newSal, answer.deptId];
     const newR = `INSERT INTO role (title, salary , department_id)
@@ -175,6 +183,7 @@ const addRole = async () =>{
   });
 })
 };
+//Lets user add  employee
 const addEmp = async () =>{
  
   const newEmp = await inquirer.prompt ([
@@ -223,6 +232,7 @@ const addEmp = async () =>{
    
     }
   ])
+    // puts user answers into the db
   .then(answer => {
     const choices = [answer.firstName, answer.lastName, answer.roleId, answer.manId];
     const newE = `INSERT INTO employee (first_name, last_name , role_id, manager_id)
