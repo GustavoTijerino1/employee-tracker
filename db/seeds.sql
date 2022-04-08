@@ -16,10 +16,8 @@ VALUES ("Sales Lead", 100, 1),
 INSERT INTO employee (first_name, last_name , role_id, manager_id)
 VALUES
        ("Broly", "Lopez" ,1, NULL),
-       ("Son", "Goku", 2, 7),
-       ("Naruto", "Uzumaki", 3, NULL),
-       ("Sasuke", "Uchiha", 4, 9),
-       ("Jiren","The Grey",5, NULL),
-       ("Prince","Vegeta",6, 11);
-
-
+       ("Son", "Goku", 2, 1),
+       ("Naruto", "Uzumaki", 3,2),
+       ("Sasuke", "Uchiha", 4, 3),
+       ("Jiren","The Grey",5, 4),
+       ("Prince","Vegeta",6, 5);
