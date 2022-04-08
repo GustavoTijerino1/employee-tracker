@@ -2,7 +2,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Description
-This project lets you create a Note-Taker, by using Express and saving data from a JSON file.
+This project lets user create or view employees, roles and departments for their business.
 
 ## Table of Contents
 - [Installation](#installation)
