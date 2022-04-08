@@ -131,9 +131,9 @@ const addRole = async () =>{
       
       type: 'input',
       message: 'What role would you like to add?',
-      name: 'newRoles',
-      validate: newRole => {
-        if (newRole) {
+      name: 'role',
+      validate: role => {
+        if (role) {
             return true;
         } else {
             console.log('Please enter a role.');
@@ -146,11 +146,62 @@ const addRole = async () =>{
       type: 'input',
       message: 'What will be the salary?',
       name: 'newSal',
-      validate: newDept => {
-        if (newDept) {
+      validate: newSal => {
+        if (newSal) {
             return true;
         } else {
             console.log('Please enter a salary');
+            return false;
+        }
+      }
+    },
+    { 
+      type: 'list',
+      message: 'Which Dept id does the role belong to?',
+      name: 'deptId',
+      choices: ['1', '2', '3']
+    }
+  ])
+  .then(answer => {
+    const choices = [answer.role, answer.newSal, answer.deptId];
+    const newR = `INSERT INTO role (title, salary , department_id)
+      VALUES(?, ?, ?);`
+
+      db.query(newR, choices, (err, result) => {
+        if (err) throw err;
+      console.log(`Added  ${answer.newRole}  to Role!`); 
+
+      viewRole();
+  });
+})
+};
+const addEmp = async () =>{
+ 
+  const newEmp = await inquirer.prompt ([
+    {
+      
+      type: 'input',
+      message: "What is the employee's first name?",
+      name: 'firstName',
+      validate: firstName => {
+        if (firstName) {
+            return true;
+        } else {
+            console.log('Please enter a First Name.');
+            return false;
+        }
+      }
+    },
+    {
+      
+      type: 'input',
+      message:"What is the employee's last name?",
+      name: 'lastName',
+      validate: lastName => {
+        if (lastName) {
+            return true;
+        } else {
+            console.log('Please enter a Last Name');
             return false;
         }
       }
@@ -159,31 +210,30 @@ const addRole = async () =>{
     {
       
       type: 'list',
-      message: 'Which Dept does the role belong to?',
-      name: 'addDept',
-      choices: ['Sales', 'Engineering', 'Finance']
+      message: "What is the employee's role id?",
+      name: 'roleId',
+      choices: ['2', '3', '4']
+    },
+    {
+      
+      type: 'list',
+      message: "What is the manager id of the employee?",
+      name: 'manId',
+      choices: ['1', '2', '3']
+   
     }
   ])
   .then(answer => {
-    const newR = `BEGIN;
-    INSERT INTO role (title, salary)
-      VALUES('?', '?');
-    INSERT INTO department (name) 
-      VALUES(LAST_INSERT_ID(),;
-    COMMIT;`;
-    db.query(newD, answer.newDept, (err, result) => {
-      if (err) throw err;
-      console.log(`Added  ${answer.newDept}  to departments!`); 
+    const choices = [answer.firstName, answer.lastName, answer.roleId, answer.manId];
+    const newE = `INSERT INTO employee (first_name, last_name , role_id, manager_id)
+      VALUES(?, ?, ?, ?);`
 
-      viewDep();
+      db.query(newE, choices, (err, result) => {
+        if (err) throw err;
+      console.log(`Added  ${answer.newE}  to Role!`); 
+
+      viewEmp();
   });
 })
-};
-const addEmp= () =>{
-  db.query('INSERT INTO * FROM employee', (err, results) => {
-
-    
-
-    console.table(results);
-  })
+  
 }
